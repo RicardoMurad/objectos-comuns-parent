@@ -556,5 +556,6 @@
 	</dependencies>
   <modules>
     <module>objectos-comuns-boleto</module>
+    <module>exc</module>
   </modules>
 </project>
