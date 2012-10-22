@@ -6,8 +6,6 @@
  */
 package br.com.objectos.comuns.boleto;
 
-import java.math.BigDecimal;
-
 import org.testng.annotations.Test;
 
 import br.com.caelum.stella.boleto.Banco;
@@ -22,25 +20,24 @@ import br.com.caelum.stella.boleto.transformer.BoletoGenerator;
  * @author ricardo.murad@objectos.com.br (Ricardo Murad)
  */
 @Test
-public class TesteDeGerarBoleto {
+public class PrimeiroTesteDeGerarBoleto {
 
   public void teste_construcao_de_boleto() {
-
     Datas datas = Datas.newDatas()
-        .withDocumento(22, 10, 2012)
-        .withProcessamento(22, 10, 2012)
-        .withVencimento(25, 12, 2012);
+        .withDocumento(1, 1, 2012)
+        .withProcessamento(1, 11, 2012)
+        .withVencimento(12, 12, 2012);
 
     Emissor emissor = Emissor.newEmissor()
-        .withCedente("João da silva")
-        .withAgencia(238)
-        .withContaCorrente(10270762)
-        .withCarteira(10)
-        .withNossoNumero(1)
+        .withCedente("João da Silva")
+        .withAgencia(1824)
+        .withContaCorrente(76000)
+        .withCarteira(18)
         .withNossoNumero(9000206);
 
     Sacado sacado = Sacado.newSacado()
         .withNome("Jorge da Silva")
+        .withEndereco("Avenida paulista, 100")
         .withCpf("30567362850")
         .withBairro("Bela Vista")
         .withCep("01310100")
@@ -52,9 +49,10 @@ public class TesteDeGerarBoleto {
     Boleto boleto = Boleto.newBoleto()
         .withBanco(banco)
         .withDatas(datas)
+        .withDescricoes("Descrição")
         .withEmissor(emissor)
         .withSacado(sacado)
-        .withValorBoleto(BigDecimal.valueOf(100.0))
+        .withValorBoleto("200.0")
         .withDescricoes(" Pagamento do produto 0001")
         .withAceite(false)
         .withInstrucoes("Não receber após a data de vencimento")
@@ -63,7 +61,8 @@ public class TesteDeGerarBoleto {
 
     BoletoGenerator generator = new BoletoGenerator(boleto);
 
-    generator.toPDF("saida.pdf");
+    generator.toPNG("teste.png");
+    generator.toPDF("Saida.pdf");
 
   }
 }
