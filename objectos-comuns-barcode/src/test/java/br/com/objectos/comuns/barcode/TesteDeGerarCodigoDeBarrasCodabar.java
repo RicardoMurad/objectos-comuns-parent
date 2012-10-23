@@ -1,5 +1,5 @@
 /*
- * TesteDeGerarCodigoDeBarrasCodigo128.java criado em 23/10/2012
+ * TesteDeGerarCodigoDeBarrasCodabar.java criado em 23/10/2012
  * 
  * Propriedade de Objectos Fábrica de Software LTDA.
  * Reprodução parcial ou total proibida.
@@ -20,17 +20,15 @@ import org.testng.annotations.Test;
  * @author ricardo.murad@objectos.com.br (Ricardo Murad)
  */
 @Test
-public class TesteDeGerarCodigoDeBarrasCodigo128 {
+public class TesteDeGerarCodigoDeBarrasCodabar {
 
-  public void gerar_codigo_modelo_128() throws BarcodeException, OutputException {
-
-    String alfanumerico = "ObjectosCode128";
-    String path = "./target/output.png";
+  public void gerar_codigo_modelo_codabar() throws BarcodeException, OutputException {
+    String boletroFebraban = "23654781257936541257413968554478558652584155";
+    String path = "./target/outputCodabar.png";
     File file = new File(path);
 
-    Barcode barcode = BarcodeFactory.createCode128(alfanumerico);
-    BarcodeImageHandler.saveGIF(barcode, file);
-
+    Barcode codabar = BarcodeFactory.createCodabar(boletroFebraban);
+    BarcodeImageHandler.saveJPEG(codabar, file);
   }
 
 }
