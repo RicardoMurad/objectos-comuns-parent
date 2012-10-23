@@ -23,11 +23,11 @@ import org.testng.annotations.Test;
 public class TesteDeGerarCodigoDeBarrasCodabar {
 
   public void gerar_codigo_modelo_codabar() throws BarcodeException, OutputException {
-    String boletroFebraban = "23654781257936541257413968554478558652584155";
+    String boletoFebraban = "23654781257936541257413968554478558652584155";
     String path = "./target/outputCodabar.png";
     File file = new File(path);
 
-    Barcode codabar = BarcodeFactory.createCodabar(boletroFebraban);
+    Barcode codabar = BarcodeFactory.createCodabar(boletoFebraban);
     BarcodeImageHandler.saveJPEG(codabar, file);
   }
 
