@@ -29,7 +29,7 @@ import br.com.caelum.stella.boleto.transformer.BoletoGenerator;
  * @author ricardo.murad@objectos.com.br (Ricardo Murad)
  */
 @Test
-public class PrimeiroTesteDeGerarBoleto {
+public class PrimeiroTesteDeGerarBoletoCaellum {
 
   public void teste_construcao_de_boleto() {
     Datas datas = Datas.newDatas()

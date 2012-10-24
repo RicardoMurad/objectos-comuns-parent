@@ -13,12 +13,14 @@
     <modules>
         <module>objectos-comuns-attachment</module>
         <module>objectos-comuns-base</module>
+        <module>objectos-comuns-boleto</module>
         <module>objectos-comuns-cnab</module>
         <module>objectos-comuns-fileupload</module>
         <module>objectos-comuns-jdbc</module>
         <module>objectos-comuns-sitebricks</module>
     </modules>
 	<properties>
+		<caelum.stella.version>2.0-beta1</caelum.stella.version>
 		<caucho.resin.version>3.2.1</caucho.resin.version>
 		<eclipse.lifecycle-mapping.version>1.0.0</eclipse.lifecycle-mapping.version>
 		<google.guava.version>13.0</google.guava.version>
@@ -554,8 +556,4 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-  <modules>
-    <module>objectos-comuns-boleto</module>
-    <module>exc</module>
-  </modules>
 </project>

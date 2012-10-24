@@ -1,46 +1,37 @@
-<?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>br.com.objectos</groupId>
-    <artifactId>objectos-comuns-parent</artifactId>
-    <version>2.0.42-SNAPSHOT</version>
-  </parent>
-  <groupId>br.com.objectos</groupId>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>objectos-comuns-parent</artifactId>
+		<groupId>br.com.objectos</groupId>
+        <version>3.0-SNAPSHOT</version>
+        <relativePath>..</relativePath>
+	</parent>
   <artifactId>objectos-comuns-boleto</artifactId>
-  <version>2.0.42-SNAPSHOT</version>
-  <name>exc</name>
-  <url>http://maven.apache.org</url>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+  <name>objectos :: comuns :: web :: boleto</name>
+  <scm>
+      <connection>scm:git:git://objectos/objectos-comuns-boleto.git</connection>
+      <developerConnection>scm:git:git@github.com:objectos/objectos-comuns-boleto.git</developerConnection>
+  </scm>
   <dependencies>
-  
+	<dependency>
+		<groupId>br.com.objectos</groupId>
+		<artifactId>objectos-comuns-base</artifactId>
+		<version>${objectos.comuns.base.version}</version>
+	</dependency>  
 	<dependency>
     	<groupId>br.com.caelum.stella</groupId>
     	<artifactId>caelum-stella-core</artifactId>
-    	<version>2.0-beta1</version>
+    	<version>${caelum.stella.version}</version>
 	</dependency>
-	
 	<dependency>
     	<groupId>br.com.caelum.stella</groupId>
     	<artifactId>caelum-stella-bean-validation</artifactId>
-    	<version>2.0-beta1</version>
+    	<version>${caelum.stella.version}</version>
 	</dependency>
-
 	<dependency>
     	<groupId>br.com.caelum.stella</groupId>
     	<artifactId>caelum-stella-boleto</artifactId>
-    	<version>2.0-beta1</version>
+    	<version>${caelum.stella.version}</version>
 	</dependency>
-	
-    
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 </project>
