@@ -17,12 +17,11 @@ package br.com.objectos.comuns.boleto;
 
 import java.math.BigDecimal;
 
-import org.joda.time.LocalDate;
-
 import br.com.caelum.stella.boleto.Boleto;
 import br.com.caelum.stella.boleto.Datas;
 import br.com.caelum.stella.boleto.Emissor;
 import br.com.caelum.stella.boleto.Sacado;
+import br.com.caelum.stella.boleto.bancos.BancoDoBrasil;
 import br.com.caelum.stella.boleto.transformer.BoletoGenerator;
 
 /**
@@ -32,14 +31,103 @@ public class BoletoWrapper {
 
   private final Boleto boleto;
   private final Datas datas;
+  private final Sacado sacado;
+  private final Emissor emissor;
 
   BoletoWrapper() {
-    // Guice
+    // -- Guice
     this.datas = Datas.newDatas();
     this.boleto = Boleto.newBoleto();
+    this.sacado = Sacado.newSacado();
+    this.emissor = Emissor.newEmissor();
   }
 
-  public BoletoWrapper sacado(Sacado sacado) {
+  public BoletoWrapper nomeCedente(String nome) {
+    emissor.withCedente(nome);
+    return this;
+  }
+
+  public BoletoWrapper agencia(int agencia) {
+    emissor.withAgencia(agencia);
+    return this;
+  }
+
+  public BoletoWrapper digitoAgencia(char digito) {
+    emissor.withDigitoAgencia(digito);
+    return this;
+  }
+
+  public BoletoWrapper contaCorrente(long conta) {
+    emissor.withContaCorrente(conta);
+    return this;
+  }
+
+  public BoletoWrapper digitoContaCorrente(char digito) {
+    emissor.withDigitoContaCorrente(digito);
+    return this;
+  }
+
+  public BoletoWrapper codigoAgencia(int codigo) {
+    emissor.withCodigoFornecidoPelaAgencia(codigo);
+    return this;
+  }
+
+  public BoletoWrapper codigoOperacao(int codigo) {
+    emissor.withCodigoOperacao(codigo);
+    return this;
+  }
+
+  public BoletoWrapper carteira(int carteira) {
+    emissor.withCarteira(carteira);
+    return this;
+  }
+
+  public BoletoWrapper nossoNumero(long numero) {
+    emissor.withNossoNumero(numero);
+    return this;
+  }
+  public BoletoWrapper digitoNossoNumero(char digito) {
+    emissor.withDigitoNossoNumero(digito);
+    return this;
+  }
+
+  public BoletoWrapper numeroConvenio(long convenio) {
+    emissor.withNumeroConvenio(convenio);
+    return this;
+  }
+
+  public BoletoWrapper nomeSacado(String nome) {
+    sacado.withNome(nome);
+    return this;
+  }
+
+  public BoletoWrapper cpfSacado(String cpf) {
+    sacado.withCpf(cpf);
+    return this;
+  }
+
+  public BoletoWrapper enderecoSacado(String endereco) {
+    sacado.withEndereco(endereco);
+    return this;
+  }
+
+  public BoletoWrapper bairroSacado(String bairro) {
+    sacado.withBairro(bairro);
+    return this;
+  }
+
+  public BoletoWrapper cepSacado(String cep) {
+    sacado.withCep(cep);
+    return this;
+  }
+
+  public BoletoWrapper cidadeSacado(String cidade) {
+    sacado.withCidade(cidade);
+    return this;
+  }
+
+  public BoletoWrapper estadoSacado(String estado) {
+    sacado.withUf(estado);
     return this;
   }
 
@@ -51,42 +139,23 @@ public class BoletoWrapper {
     return null;
   }
 
-  public BoletoWrapper dataVencimento(LocalDate data) {
-    int dia = data.getDayOfMonth();
-    int mes = data.getMonthOfYear();
-    int ano = data.getYear();
+  public BoletoWrapper dataVencimento(int dia, int mes, int ano) {
     datas.withVencimento(dia, mes, ano);
     return this;
   }
 
-  public BoletoWrapper dataProcessamento(LocalDate data) {
-    int dia = data.getDayOfMonth();
-    int mes = data.getMonthOfYear();
-    int ano = data.getYear();
+  public BoletoWrapper dataProcessamento(int dia, int mes, int ano) {
     datas.withProcessamento(dia, mes, ano);
     return this;
   }
 
-  public BoletoWrapper dataDocumento(LocalDate data) {
-    int dia = data.getDayOfMonth();
-    int mes = data.getMonthOfYear();
-    int ano = data.getYear();
+  public BoletoWrapper dataDocumento(int dia, int mes, int ano) {
     datas.withDocumento(dia, mes, ano);
     return this;
   }
 
-  public BoletoWrapper numeroDocumento(String numero) {
-    boleto.withNumeroDoDocumento(numero);
-    return this;
-  }
-
-  public BoletoWrapper valor(double valor) {
-    boleto.withValorBoleto(BigDecimal.valueOf(valor));
-    return this;
-  }
-
-  public BoletoWrapper aceite(boolean aceite) {
-    boleto.withAceite(aceite);
+  public BoletoWrapper valorDoBoleto(String valor) {
+    boleto.withValorBoleto(valor);
     return this;
   }
 
@@ -95,23 +164,58 @@ public class BoletoWrapper {
     return this;
   }
 
+  public BoletoWrapper aceite(boolean aceite) {
+    boleto.withAceite(aceite);
+    return this;
+  }
+
   public BoletoWrapper instrucoes(String instrucoes) {
     boleto.withInstrucoes(instrucoes);
     return this;
   }
+
   public BoletoWrapper locaisDepagamento(String locaisDePagamento) {
     boleto.withLocaisDePagamento(locaisDePagamento);
     return this;
   }
 
+  public BoletoWrapper numeroDocumento(String numero) {
+    boleto.withNumeroDoDocumento(numero);
+    return this;
+  }
+
+  public BoletoWrapper especieDocumento(String especie) {
+    boleto.withEspecieDocumento(especie);
+    return this;
+  }
+
+  public BoletoWrapper quantidadeMoeda(BigDecimal quantidade) {
+    boleto.withQuantidadeMoeda(quantidade);
+    return this;
+  }
+
+  public BoletoWrapper valorMoeda(BigDecimal valor) {
+    boleto.withValorMoeda(valor);
+    return this;
+  }
+
+  public BoletoWrapper paraBanco(TipoDeBanco banco) {
+    // refac propio enum deve retornar inst
+    if (banco == TipoDeBanco.BANCO_DO_BRASIL) {
+      BancoDoBrasil bancoDoBrasil = new BancoDoBrasil();
+      boleto.withBanco(bancoDoBrasil);
+    }
+    return this;
+  }
+
   public byte[] toPdf() {
-    boleto.withDatas(datas);
+    join();
     return new BoletoGenerator(boleto)
         .toPDF();
   }
 
   public void toPdf(String filename) {
-    boleto.withDatas(datas);
+    join();
     new BoletoGenerator(boleto)
         .toPDF(filename);
   }
@@ -119,4 +223,11 @@ public class BoletoWrapper {
   public static BoletoWrapper newBoleto() {
     return new BoletoWrapper();
   }
+
+  private void join() {
+    boleto.withDatas(datas);
+    boleto.withEmissor(emissor);
+    boleto.withSacado(sacado);
+  }
+
 }

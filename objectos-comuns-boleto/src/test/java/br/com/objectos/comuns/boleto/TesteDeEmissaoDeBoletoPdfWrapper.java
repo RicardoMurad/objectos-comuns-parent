@@ -15,7 +15,14 @@
  */
 package br.com.objectos.comuns.boleto;
 
-import org.joda.time.LocalDate;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.security.NoSuchAlgorithmException;
+
 import org.testng.annotations.Test;
 
 /**
@@ -24,24 +31,97 @@ import org.testng.annotations.Test;
 @Test
 public class TesteDeEmissaoDeBoletoPdfWrapper {
 
-  public void gerar_boleto_em_formato_pdf() {
+  public void gerar_boleto_em_formato_pdf() throws NoSuchAlgorithmException, IOException {
+    String contra = "src/test/resources/contra.pdf";
+    String resultado = "src/test/resources/saida.pdf";
 
-    String path = "boleto.pdf";
-    LocalDate data = new LocalDate(2012, 10, 20);
+    int diaDocumento = 22;
+    int mesDocumento = 7;
+    int anoDocumento = 2012;
 
-    BoletoWrapper
-        .newBoleto()
-        .dataDocumento(data)
-        .dataProcessamento(data)
-        .dataVencimento(data)
-        .valor(100.0)
-        .aceite(false)
-        .numeroDocumento("12345")
-        .descricao("Produto XYZ")
-        .instrucoes("não receber após o vencimento")
-        .locaisDepagamento("pagável em qualquer agência")
-        .toPdf(path);
+    int diaProcessamento = 25;
+    int mesProcessamento = 8;
+    int anoProcessamento = 2013;
 
+    int diaVencimento = 28;
+    int mesVencimento = 9;
+    int anoVencimento = 2014;
+
+    String nomeCedente = "Paulo da Silva";
+    int agencia = 238;
+    char digitoAgencia = '3';
+    int contaCorrente = 127076;
+    char digitoContaCorrente = '2';
+    int codFornecidoPelaAgencia = 987;
+    int codOperacao = 9;
+    int carteira = 18;
+    int nossoNumero = 966691;
+    char digitoNossoNumero = 'z';
+    int numeroConvenio = 456;
+
+    String nomeSacado = "Marina Santos";
+    String cpf = "30567362850";
+    String endereco = "Avenida Paulista, 1000";
+    String bairro = "Bela Vista";
+    String cep = "01310100";
+    String cidade = "São Paulo";
+    String estado = "SP";
+
+    String valorBoleto = "177.40";
+    String descricao = "01 Produto XY";
+    boolean aceite = false;
+    String instruções = "Não receber após a data de vencimento.";
+    String locaisPagamento = "Pagável em qualquer agência até a data de vencimento";
+    String numeroDocumento = "124365";
+    String especie = "EspecieDoc";
+    BigDecimal quantidadeMoeda = BigDecimal.valueOf(11);
+    BigDecimal valorMoeda = BigDecimal.valueOf(9);
+
+    BoletoWrapper.newBoleto()
+        .dataDocumento(diaDocumento, mesDocumento, anoDocumento)
+        .dataProcessamento(diaProcessamento, mesProcessamento, anoProcessamento)
+        .dataVencimento(diaVencimento, mesVencimento, anoVencimento)
+
+        .nomeCedente(nomeCedente)
+        .agencia(agencia)
+        .digitoAgencia(digitoAgencia)
+        .contaCorrente(contaCorrente)
+        .digitoContaCorrente(digitoContaCorrente)
+        .codigoAgencia(codFornecidoPelaAgencia)
+        .codigoOperacao(codOperacao)
+        .carteira(carteira)
+        .nossoNumero(nossoNumero)
+        .digitoNossoNumero(digitoNossoNumero)
+        .numeroConvenio(numeroConvenio)
+
+        .nomeSacado(nomeSacado)
+        .cpfSacado(cpf)
+        .enderecoSacado(endereco)
+        .bairroSacado(bairro)
+        .cepSacado(cep)
+        .cidadeSacado(cidade)
+        .estadoSacado(estado)
+
+        .valorDoBoleto(valorBoleto)
+        .descricao(descricao)
+        .aceite(aceite)
+        .instrucoes(instruções)
+        .locaisDepagamento(locaisPagamento)
+        .numeroDocumento(numeroDocumento)
+        .especieDocumento(especie)
+        .quantidadeMoeda(quantidadeMoeda)
+        .valorMoeda(valorMoeda)
+        .paraBanco(TipoDeBanco.BANCO_DO_BRASIL)
+        .toPdf(resultado);
+
+    byte[] res = GerarHash.fileToSha1(contra);
+    byte[] prova = GerarHash.fileToSha1(resultado);
+
+    assertThat(prova, notNullValue());
+    assertThat(contra, notNullValue());
+    assertThat(res.length, equalTo(prova.length));
+    assertThat(res.length, equalTo(prova.length));
+    assertThat(res, equalTo(prova));
   }
 
 }

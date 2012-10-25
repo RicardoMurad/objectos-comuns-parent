@@ -22,5 +22,6 @@ public enum TipoDeBanco {
 
   BRADESCO,
   ITAU,
+  BANCO_DO_BRASIL
 
 }

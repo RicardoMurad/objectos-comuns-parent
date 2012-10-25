@@ -19,12 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import org.testng.annotations.Test;
 
@@ -41,8 +36,6 @@ import br.com.caelum.stella.boleto.transformer.BoletoGenerator;
 @Test
 public class PrimeiroTesteDeGerarBoletoCaellum {
 
-  private FileInputStream stream;
-
   @Test
   public void teste_construcao_de_boleto_com_stella() throws Exception {
     String contra = "src/test/resources/contra.pdf";
@@ -57,10 +50,10 @@ public class PrimeiroTesteDeGerarBoletoCaellum {
     int anoProcessamento = 2013;
 
     int diaVencimento = 28;
-    int mesVecnimento = 9;
+    int mesVencimento = 9;
     int anoVencimento = 2014;
 
-    String nomeCedente = "Paulo da Silva";
+    String nomeEmissor = "Paulo da Silva";
     int agencia = 238;
     char digitoAgencia = '3';
     int contaCorrente = 127076;
@@ -72,7 +65,7 @@ public class PrimeiroTesteDeGerarBoletoCaellum {
     char digitoNossoNumero = 'z';
     int numeroConvenio = 456;
 
-    String nomeSacado = "Marina Santos";
+    String nomeCedente = "Marina Santos";
     String cpf = "30567362850";
     String endereco = "Avenida Paulista, 1000";
     String bairro = "Bela Vista";
@@ -95,10 +88,10 @@ public class PrimeiroTesteDeGerarBoletoCaellum {
     Datas datas = Datas.newDatas()
         .withDocumento(diaDocumento, mesDocumento, anoDocumento)
         .withProcessamento(diaProcessamento, mesProcessamento, anoProcessamento)
-        .withVencimento(diaVencimento, mesVecnimento, anoVencimento);
+        .withVencimento(diaVencimento, mesVencimento, anoVencimento);
 
     Emissor emissor = Emissor.newEmissor()
-        .withCedente(nomeCedente)
+        .withCedente(nomeEmissor)
         .withAgencia(agencia)
         .withDigitoAgencia(digitoAgencia)
         .withContaCorrente(contaCorrente)
@@ -111,7 +104,7 @@ public class PrimeiroTesteDeGerarBoletoCaellum {
         .withNumeroConvenio(numeroConvenio);
 
     Sacado sacado = Sacado.newSacado()
-        .withNome(nomeSacado)
+        .withNome(nomeCedente)
         .withCpf(cpf)
         .withEndereco(endereco)
         .withBairro(bairro)
@@ -138,31 +131,13 @@ public class PrimeiroTesteDeGerarBoletoCaellum {
     generator.toPDF(resultado);
     generator.toPDF(contra);
 
-    byte[] res = gerarHashSha1(contra);
-    byte[] prova = gerarHashSha1(resultado);
+    byte[] res = GerarHash.fileToSha1(contra);
+    byte[] prova = GerarHash.fileToSha1(resultado);
 
     assertThat(prova, notNullValue());
     assertThat(contra, notNullValue());
     assertThat(res.length, equalTo(prova.length));
     assertThat(res, equalTo(prova));
-  }
-
-  private byte[] gerarHashSha1(String path) throws NoSuchAlgorithmException, IOException {
-    File file = new File(path);
-    MessageDigest digest = MessageDigest.getInstance("SHA1");
-    stream = new FileInputStream(file);
-    byte[] buffer = new byte[1024];
-    int n = 0;
-
-    while (n != -1) {
-      n = stream.read();
-      if (n > 0) {
-        digest.update(buffer, 0, n);
-      }
-    }
-
-    stream.close();
-    return digest.digest();
   }
 
 }
