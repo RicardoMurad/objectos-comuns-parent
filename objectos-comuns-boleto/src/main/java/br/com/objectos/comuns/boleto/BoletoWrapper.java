@@ -16,6 +16,9 @@
 package br.com.objectos.comuns.boleto;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
+
+import org.joda.time.LocalDate;
 
 import br.com.caelum.stella.boleto.Boleto;
 import br.com.caelum.stella.boleto.Datas;
@@ -139,19 +142,28 @@ public class BoletoWrapper {
     return null;
   }
 
-  public BoletoWrapper dataVencimento(int dia, int mes, int ano) {
-    datas.withVencimento(dia, mes, ano);
+  public BoletoWrapper dataVencimento(LocalDate data) {
+    datas.withVencimento(toCalendar(data));
     return this;
   }
 
-  public BoletoWrapper dataProcessamento(int dia, int mes, int ano) {
-    datas.withProcessamento(dia, mes, ano);
+  public BoletoWrapper dataProcessamento(LocalDate data) {
+    datas.withProcessamento(toCalendar(data));
     return this;
   }
 
-  public BoletoWrapper dataDocumento(int dia, int mes, int ano) {
-    datas.withDocumento(dia, mes, ano);
+  public BoletoWrapper dataDocumento(LocalDate data) {
+    datas.withDocumento(toCalendar(data));
     return this;
+  }
+
+  private Calendar toCalendar(LocalDate data) {
+    int dia = data.getDayOfMonth();
+    int mes = data.getMonthOfYear();
+    int ano = data.getYear();
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(ano, mes, dia);
+    return calendar;
   }
 
   public BoletoWrapper valorDoBoleto(String valor) {

@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 
+import org.joda.time.LocalDate;
 import org.testng.annotations.Test;
 
 /**
@@ -35,17 +36,9 @@ public class TesteDeEmissaoDeBoletoPdfWrapper {
     String contra = "src/test/resources/contra.pdf";
     String resultado = "src/test/resources/saida.pdf";
 
-    int diaDocumento = 22;
-    int mesDocumento = 7;
-    int anoDocumento = 2012;
-
-    int diaProcessamento = 25;
-    int mesProcessamento = 8;
-    int anoProcessamento = 2013;
-
-    int diaVencimento = 28;
-    int mesVencimento = 9;
-    int anoVencimento = 2014;
+    LocalDate dataDocumento = new LocalDate(2012, 7, 22);
+    LocalDate dataProcessamento = new LocalDate(2013, 8, 25);
+    LocalDate dataVecimento = new LocalDate(2014, 9, 28);
 
     String nomeCedente = "Paulo da Silva";
     int agencia = 238;
@@ -78,9 +71,9 @@ public class TesteDeEmissaoDeBoletoPdfWrapper {
     BigDecimal valorMoeda = BigDecimal.valueOf(9);
 
     BoletoWrapper.newBoleto()
-        .dataDocumento(diaDocumento, mesDocumento, anoDocumento)
-        .dataProcessamento(diaProcessamento, mesProcessamento, anoProcessamento)
-        .dataVencimento(diaVencimento, mesVencimento, anoVencimento)
+        .dataDocumento(dataDocumento)
+        .dataProcessamento(dataProcessamento)
+        .dataVencimento(dataVecimento)
 
         .nomeCedente(nomeCedente)
         .agencia(agencia)
