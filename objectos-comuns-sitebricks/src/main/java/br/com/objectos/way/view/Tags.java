@@ -36,8 +36,9 @@ class Tags {
     Document doc = Jsoup.parse(html);
 
     return ImmutableSet.<String> builder()
+        .addAll(parseAttributeKey(doc, "data-way-async"))
+        .addAll(parseAttributeKey(doc, "data-way-lazy"))
         .addAll(parseAttributeKey(doc, "data-way-template"))
-        .addAll(parseAttributeKey(doc, "data-way-render"))
         .build();
   }
 
