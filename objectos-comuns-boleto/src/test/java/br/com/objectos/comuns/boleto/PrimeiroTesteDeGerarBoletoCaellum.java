@@ -18,6 +18,7 @@ package br.com.objectos.comuns.boleto;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+import java.io.File;
 import java.math.BigDecimal;
 
 import org.testng.annotations.Test;
@@ -133,6 +134,9 @@ public class PrimeiroTesteDeGerarBoletoCaellum {
     String c2 = PdfToText.fromFile(resultado);
 
     assertThat(c1, equalTo(c2));
+
+    File file = new File(resultado);
+    file.delete();
   }
 
 }

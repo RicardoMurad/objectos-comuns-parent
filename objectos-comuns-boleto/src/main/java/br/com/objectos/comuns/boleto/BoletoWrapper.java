@@ -24,7 +24,6 @@ import br.com.caelum.stella.boleto.Boleto;
 import br.com.caelum.stella.boleto.Datas;
 import br.com.caelum.stella.boleto.Emissor;
 import br.com.caelum.stella.boleto.Sacado;
-import br.com.caelum.stella.boleto.bancos.BancoDoBrasil;
 import br.com.caelum.stella.boleto.transformer.BoletoGenerator;
 
 /**
@@ -38,7 +37,6 @@ public class BoletoWrapper {
   private final Emissor emissor;
 
   BoletoWrapper() {
-    // -- Guice
     this.datas = Datas.newDatas();
     this.boleto = Boleto.newBoleto();
     this.sacado = Sacado.newSacado();
@@ -105,10 +103,9 @@ public class BoletoWrapper {
   }
 
   public BoletoWrapper cpfSacado(String cpf) {
-    sacado.withCpf(cpf);
+    sacado.withCpf(cleanString(cpf));
     return this;
   }
-
   public BoletoWrapper enderecoSacado(String endereco) {
     sacado.withEndereco(endereco);
     return this;
@@ -120,7 +117,7 @@ public class BoletoWrapper {
   }
 
   public BoletoWrapper cepSacado(String cep) {
-    sacado.withCep(cep);
+    sacado.withCep(cleanString(cep));
     return this;
   }
 
@@ -138,7 +135,7 @@ public class BoletoWrapper {
     return this;
   }
 
-  public BoletoWrapper emissor(TipoDeBanco banco) {
+  public BoletoWrapper emissor(BoletoBanco banco) {
     return null;
   }
 
@@ -158,11 +155,8 @@ public class BoletoWrapper {
   }
 
   private Calendar toCalendar(LocalDate data) {
-    int dia = data.getDayOfMonth();
-    int mes = data.getMonthOfYear();
-    int ano = data.getYear();
     Calendar calendar = Calendar.getInstance();
-    calendar.set(ano, mes, dia);
+    calendar.setTime(data.toDate());
     return calendar;
   }
 
@@ -211,12 +205,8 @@ public class BoletoWrapper {
     return this;
   }
 
-  public BoletoWrapper paraBanco(TipoDeBanco banco) {
-    // refac propio enum deve retornar inst
-    if (banco == TipoDeBanco.BANCO_DO_BRASIL) {
-      BancoDoBrasil bancoDoBrasil = new BancoDoBrasil();
-      boleto.withBanco(bancoDoBrasil);
-    }
+  public BoletoWrapper paraBanco(BoletoBanco enumBanco) {
+    boleto.withBanco(enumBanco.getbanco());
     return this;
   }
 
@@ -240,6 +230,11 @@ public class BoletoWrapper {
     boleto.withDatas(datas);
     boleto.withEmissor(emissor);
     boleto.withSacado(sacado);
+  }
+
+  private String cleanString(String string) {
+    String val = string.replaceAll("[.//\\,-]", "");
+    return val;
   }
 
 }

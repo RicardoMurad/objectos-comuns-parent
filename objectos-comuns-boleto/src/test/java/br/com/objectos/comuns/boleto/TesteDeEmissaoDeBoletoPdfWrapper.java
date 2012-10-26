@@ -18,6 +18,7 @@ package br.com.objectos.comuns.boleto;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+import java.io.File;
 import java.math.BigDecimal;
 
 import org.joda.time.LocalDate;
@@ -50,7 +51,7 @@ public class TesteDeEmissaoDeBoletoPdfWrapper {
     int numeroConvenio = 456;
 
     String nomeSacado = "Marina Santos";
-    String cpf = "30567362850";
+    String cpf = "305.673,628/-50";
     String endereco = "Avenida Paulista, 1000";
     String bairro = "Bela Vista";
     String cep = "01310100";
@@ -101,13 +102,15 @@ public class TesteDeEmissaoDeBoletoPdfWrapper {
         .especieDocumento(especie)
         .quantidadeMoeda(quantidadeMoeda)
         .valorMoeda(valorMoeda)
-        .paraBanco(TipoDeBanco.BANCO_DO_BRASIL)
+        .paraBanco(BoletoBanco.BANCO_DO_BRASIL)
         .toPdf(resultado);
 
     String c1 = PdfToText.fromFile(contra);
     String c2 = PdfToText.fromFile(resultado);
 
     assertThat(c1, equalTo(c2));
-  }
 
+    File file = new File(resultado);
+    file.delete();
+  }
 }
