@@ -15,14 +15,18 @@
  */
 package br.com.objectos.way.view;
 
+import static com.google.common.collect.Sets.newHashSet;
+
 import java.util.Set;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
@@ -39,6 +43,7 @@ class Tags {
         .addAll(parseAttributeKey(doc, "data-way-async"))
         .addAll(parseAttributeKey(doc, "data-way-lazy"))
         .addAll(parseAttributeKey(doc, "data-way-template"))
+        .addAll(parseMustachePartials(html))
         .build();
   }
 
@@ -54,9 +59,24 @@ class Tags {
     return html.replaceFirst("<head>", Matcher.quoteReplacement(script.toString()));
   }
 
-  private static Iterable<String> parseAttributeKey(Document doc, String attributeKey) {
+  @VisibleForTesting
+  static Iterable<String> parseAttributeKey(Document doc, String attributeKey) {
     Elements template = doc.getElementsByAttribute(attributeKey);
     return Iterables.transform(template, new ToAttrValue(attributeKey));
+  }
+
+  static Iterable<String> parseMustachePartials(String html) {
+    Set<String> result = newHashSet();
+
+    Pattern regex = Pattern.compile("\\{\\{>([^\\}]*)\\}\\}");
+    Matcher matcher = regex.matcher(html);
+
+    while (matcher.find()) {
+      String group = matcher.group(1);
+      result.add(group.trim());
+    }
+
+    return result;
   }
 
   private static class ToAttrValue implements Function<Element, String> {

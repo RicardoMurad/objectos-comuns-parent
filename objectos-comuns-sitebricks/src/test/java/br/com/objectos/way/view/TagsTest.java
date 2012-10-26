@@ -31,6 +31,7 @@ import br.com.objectos.comuns.sitebricks.ObjectosComunsSitebricksTestModule;
 import br.com.objectos.comuns.sitebricks.json.Context;
 
 import com.google.common.base.Charsets;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.io.Resources;
 import com.google.inject.Inject;
 
@@ -59,6 +60,17 @@ public class TagsTest {
 
     Set<String> res = Tags.extractTemplates(html);
     assertThat(res.size(), equalTo(0));
+  }
+
+  public void mustache_partials() throws IOException {
+    String html = read("/views/tags-partials.html");
+
+    Iterable<String> partials = Tags.parseMustachePartials(html);
+    Set<String> res = ImmutableSet.copyOf(partials);
+
+    assertThat(res.size(), equalTo(2));
+    assertTrue(res.contains("list/Breadcrumbs.mustache"));
+    assertTrue(res.contains("form/Whatever.mustache"));
   }
 
   public void append_context() throws IOException {
