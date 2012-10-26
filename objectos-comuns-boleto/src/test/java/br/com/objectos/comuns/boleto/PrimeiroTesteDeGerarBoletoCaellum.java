@@ -17,7 +17,6 @@ package br.com.objectos.comuns.boleto;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
 
 import java.math.BigDecimal;
 
@@ -129,15 +128,11 @@ public class PrimeiroTesteDeGerarBoletoCaellum {
 
     BoletoGenerator generator = new BoletoGenerator(boleto);
     generator.toPDF(resultado);
-    generator.toPDF(contra);
 
-    byte[] res = GerarHash.fileToSha1(contra);
-    byte[] prova = GerarHash.fileToSha1(resultado);
+    String c1 = PdfToText.fromFile(contra);
+    String c2 = PdfToText.fromFile(resultado);
 
-    assertThat(prova, notNullValue());
-    assertThat(contra, notNullValue());
-    assertThat(res.length, equalTo(prova.length));
-    assertThat(res, equalTo(prova));
+    assertThat(c1, equalTo(c2));
   }
 
 }

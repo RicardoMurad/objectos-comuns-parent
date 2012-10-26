@@ -17,11 +17,8 @@ package br.com.objectos.comuns.boleto;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
 
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.security.NoSuchAlgorithmException;
 
 import org.joda.time.LocalDate;
 import org.testng.annotations.Test;
@@ -32,7 +29,7 @@ import org.testng.annotations.Test;
 @Test
 public class TesteDeEmissaoDeBoletoPdfWrapper {
 
-  public void gerar_boleto_em_formato_pdf() throws NoSuchAlgorithmException, IOException {
+  public void gerar_boleto_em_formato_pdf() throws Exception {
     String contra = "src/test/resources/contra.pdf";
     String resultado = "src/test/resources/saida.pdf";
 
@@ -107,14 +104,10 @@ public class TesteDeEmissaoDeBoletoPdfWrapper {
         .paraBanco(TipoDeBanco.BANCO_DO_BRASIL)
         .toPdf(resultado);
 
-    byte[] res = GerarHash.fileToSha1(contra);
-    byte[] prova = GerarHash.fileToSha1(resultado);
+    String c1 = PdfToText.fromFile(contra);
+    String c2 = PdfToText.fromFile(resultado);
 
-    assertThat(prova, notNullValue());
-    assertThat(contra, notNullValue());
-    assertThat(res.length, equalTo(prova.length));
-    assertThat(res.length, equalTo(prova.length));
-    assertThat(res, equalTo(prova));
+    assertThat(c1, equalTo(c2));
   }
 
 }

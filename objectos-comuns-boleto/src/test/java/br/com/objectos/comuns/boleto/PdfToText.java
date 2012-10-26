@@ -15,31 +15,25 @@
  */
 package br.com.objectos.comuns.boleto;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
-class GerarHash {
+import com.itextpdf.text.pdf.PRTokeniser;
+import com.itextpdf.text.pdf.PdfReader;
 
-  public static byte[] fileToSha1(String path) throws NoSuchAlgorithmException, IOException {
-    FileInputStream stream;
-    File file = new File(path);
-    MessageDigest digest = MessageDigest.getInstance("SHA1");
-    stream = new FileInputStream(file);
-    byte[] buffer = new byte[1024];
-    int n = 0;
+class PdfToText {
 
-    while (n != -1) {
-      n = stream.read();
-      if (n > 0) {
-        digest.update(buffer, 0, n);
-      }
+  public static String fromFile(String fileName) throws IOException {
+    PdfReader contra = new PdfReader(fileName);
+    byte[] contentContra = contra.getPageContent(1);
+    PRTokeniser tokeniser = new PRTokeniser(contentContra);
+    StringBuilder text1 = new StringBuilder();
+
+    while (tokeniser.nextToken()) {
+      if (tokeniser.getTokenType() == PRTokeniser.TokenType.STRING)
+        text1.append(tokeniser.getStringValue());
     }
 
-    stream.close();
-    return digest.digest();
+    return text1.toString();
   }
 
 }
