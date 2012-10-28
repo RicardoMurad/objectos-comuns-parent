@@ -18,7 +18,7 @@ package br.com.objectos.comuns.sitebricks.relational;
 /**
  * @author marcio.endo@objectos.com.br (Marcio Endo)
  */
-public class FakePageTotalJson implements PageTotal {
+public class FakePageTotalJson implements Pager {
 
   private boolean hasPrevious;
   private boolean hasNext;

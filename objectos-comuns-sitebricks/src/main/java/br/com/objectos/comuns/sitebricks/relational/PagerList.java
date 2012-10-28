@@ -15,33 +15,35 @@
  */
 package br.com.objectos.comuns.sitebricks.relational;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import br.com.objectos.comuns.relational.search.Page;
-import br.com.objectos.comuns.relational.search.ResultSetLoader;
-import br.com.objectos.comuns.sitebricks.RequestWrapper;
+import java.util.List;
 
 /**
  * @author marcio.endo@objectos.com.br (Marcio Endo)
  */
-public class PageTotalLoader implements ResultSetLoader<PageTotal> {
+public class PagerList<T> {
 
-  private final RequestWrapper wrapper;
+  private final boolean empty;
 
-  public PageTotalLoader(RequestWrapper wrapper) {
-    this.wrapper = wrapper;
+  private final List<T> rows;
+
+  private final Pager pager;
+
+  public PagerList(List<T> rows, Pager pager) {
+    this.empty = rows.isEmpty();
+    this.rows = rows;
+    this.pager = pager;
   }
 
-  @Override
-  public PageTotal load(ResultSet rs) throws SQLException {
-    Page page = wrapper.getPage();
+  public boolean isEmpty() {
+    return empty;
+  }
 
-    int number = page.getNumber();
-    int length = page.getLength();
-    int total = rs.getInt(1);
+  public List<T> getRows() {
+    return rows;
+  }
 
-    return new PageTotalJson(number, length, total);
+  public Pager getPager() {
+    return pager;
   }
 
 }

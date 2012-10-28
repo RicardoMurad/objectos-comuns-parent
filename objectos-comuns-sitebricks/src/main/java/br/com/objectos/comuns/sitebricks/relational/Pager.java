@@ -18,7 +18,7 @@ package br.com.objectos.comuns.sitebricks.relational;
 /**
  * @author marcio.endo@objectos.com.br (Marcio Endo)
  */
-public interface PageTotal {
+public interface Pager {
 
   boolean isHasPrevious();
   boolean isHasNext();

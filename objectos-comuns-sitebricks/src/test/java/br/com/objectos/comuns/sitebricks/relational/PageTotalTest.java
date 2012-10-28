@@ -28,7 +28,7 @@ import org.testng.annotations.Test;
 public class PageTotalTest {
 
   public void at_the_first_page_without_next() {
-    PageTotalJson res = new PageTotalJson(0, 10, 9);
+    PagerJson res = new PagerJson(0, 10, 9);
 
     assertThat(res.isHasPrevious(), is(false));
     assertThat(res.isHasNext(), is(false));
@@ -39,7 +39,7 @@ public class PageTotalTest {
   }
 
   public void at_the_first_page_with_next() {
-    PageTotalJson res = new PageTotalJson(0, 10, 15);
+    PagerJson res = new PagerJson(0, 10, 15);
 
     assertThat(res.isHasPrevious(), is(false));
     assertThat(res.isHasNext(), is(true));
@@ -50,7 +50,7 @@ public class PageTotalTest {
   }
 
   public void at_middle() {
-    PageTotalJson res = new PageTotalJson(2, 10, 78);
+    PagerJson res = new PagerJson(2, 10, 78);
 
     assertThat(res.isHasPrevious(), is(true));
     assertThat(res.isHasNext(), is(true));
@@ -61,7 +61,7 @@ public class PageTotalTest {
   }
 
   public void at_the_end() {
-    PageTotalJson res = new PageTotalJson(7, 10, 78);
+    PagerJson res = new PagerJson(7, 10, 78);
 
     assertThat(res.isHasPrevious(), is(true));
     assertThat(res.isHasNext(), is(false));

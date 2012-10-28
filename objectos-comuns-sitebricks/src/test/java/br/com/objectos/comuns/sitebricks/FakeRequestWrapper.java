@@ -14,6 +14,7 @@ import org.joda.time.LocalDate;
 
 import br.com.objectos.comuns.matematica.financeira.Percentual;
 import br.com.objectos.comuns.relational.search.Page;
+import br.com.objectos.comuns.relational.search.SimplePage;
 import br.com.objectos.comuns.sitebricks.relational.SearchString;
 
 /**
@@ -76,7 +77,13 @@ public class FakeRequestWrapper implements RequestWrapper {
 
   @Override
   public Page getPage() {
-    return (Page) params.get("page");
+    Object page = params.get("page");
+
+    if (page == null) {
+      page = new SimplePage();
+    }
+
+    return (Page) page;
   }
 
   @Override
