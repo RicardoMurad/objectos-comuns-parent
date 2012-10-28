@@ -19,16 +19,18 @@ import static com.google.common.collect.Maps.newHashMap;
 
 import java.util.Map;
 
+import br.com.objectos.comuns.io.FixedLine;
+
 /**
  * @author marcio.endo@objectos.com.br (Marcio Endo)
  */
 public enum Banco {
 
-  BRADESCO(237, Bradesco.banco),
+  BRADESCO(237, Bradesco.banco, Bradesco.ocorrenciaParser),
 
-  ITAU(341, Itau.banco),
+  ITAU(341, Itau.banco, new CnabOcorrenciaParser()),
 
-  OUTROS(999, Cnab.banco);
+  OUTROS(999, Cnab.banco, new CnabOcorrenciaParser());
 
   private static final Map<Integer, Banco> codigoMap = newHashMap();
 
@@ -43,9 +45,12 @@ public enum Banco {
 
   private final Modelo modelo;
 
-  private Banco(int codigo, Modelo modelo) {
+  private final OcorrenciaParser ocorrenciaParser;
+
+  private Banco(int codigo, Modelo modelo, OcorrenciaParser ocorrenciaParser) {
     this.codigo = codigo;
     this.modelo = modelo;
+    this.ocorrenciaParser = ocorrenciaParser;
   }
 
   public static Banco valueOf(int codigo) {
@@ -64,6 +69,10 @@ public enum Banco {
 
   public Modelo getModelo() {
     return modelo;
+  }
+
+  Object parseOcorrencia(FixedLine line) {
+    return ocorrenciaParser.apply(line);
   }
 
 }

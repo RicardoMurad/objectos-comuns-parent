@@ -16,6 +16,8 @@
 package br.com.objectos.comuns.cnab;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import br.com.objectos.comuns.io.ColumnConversionException;
+import br.com.objectos.comuns.io.FixedLine;
 
 import com.google.common.base.Preconditions;
 
@@ -36,7 +38,7 @@ public class CnabKey<K extends BancoKey, V> {
 
   final boolean optional;
 
-  private CnabKey(Class<K> keyClass, String id, Class<?> type, int pos0, int pos1, boolean optional) {
+  CnabKey(Class<K> keyClass, String id, Class<?> type, int pos0, int pos1, boolean optional) {
     this.keyClass = checkNotNull(keyClass, "keyClass");
     this.id = checkNotNull(id, "id");
     this.type = checkNotNull(type, "type");
@@ -64,6 +66,22 @@ public class CnabKey<K extends BancoKey, V> {
     return type;
   }
 
+  Object apply(Banco banco, FixedLine line) {
+    Object value = null;
+
+    try {
+      if (optional) {
+        value = line.column(pos0, pos1).orNull(type);
+      } else {
+        value = line.column(pos0, pos1).get(type);
+      }
+    } catch (ColumnConversionException e) {
+      throw new ExcecaoCnabKey(line, this, e);
+    }
+
+    return value;
+  }
+
   static class Construtor<K extends BancoKey> {
 
     private final Class<K> keyClass;
@@ -76,7 +94,7 @@ public class CnabKey<K extends BancoKey, V> {
 
     private boolean optional;
 
-    private Construtor(Class<K> keyClass) {
+    Construtor(Class<K> keyClass) {
       this.keyClass = Preconditions.checkNotNull(keyClass);
     }
 

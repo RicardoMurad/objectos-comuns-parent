@@ -15,42 +15,15 @@
  */
 package br.com.objectos.comuns.cnab;
 
-import static com.google.common.collect.Maps.newLinkedHashMap;
-
-import java.util.Map;
+import java.util.Set;
 
 import br.com.objectos.comuns.io.FixedLine;
 
 /**
  * @author marcio.endo@objectos.com.br (Marcio Endo)
  */
-abstract class RegistroPadrao implements Registro {
+interface MotivoParser {
 
-  final Banco banco;
-
-  final Map<CnabKey<?, ?>, Object> map;
-
-  public RegistroPadrao(Banco banco, Spec spec, FixedLine line) {
-    this.banco = banco;
-
-    Map<CnabKey<?, ?>, Object> map = newLinkedHashMap();
-
-    for (CnabKey<?, ?> key : spec.keySet()) {
-      Object value = key.apply(banco, line);
-      map.put(key, value);
-    }
-
-    this.map = map;
-  }
-
-  @Override
-  public Banco getBanco() {
-    return banco;
-  }
-
-  @Override
-  public String toString() {
-    return map.toString();
-  }
+  Set<Motivo> parse(FixedLine line);
 
 }

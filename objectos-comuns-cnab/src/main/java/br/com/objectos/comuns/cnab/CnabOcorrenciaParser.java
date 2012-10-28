@@ -15,42 +15,51 @@
  */
 package br.com.objectos.comuns.cnab;
 
-import static com.google.common.collect.Maps.newLinkedHashMap;
-
+import java.util.List;
 import java.util.Map;
 
 import br.com.objectos.comuns.io.FixedLine;
 
+import com.google.common.collect.ImmutableList;
+
 /**
  * @author marcio.endo@objectos.com.br (Marcio Endo)
  */
-abstract class RegistroPadrao implements Registro {
+class CnabOcorrenciaParser extends OcorrenciaParser {
 
-  final Banco banco;
+  @Override
+  public Ocorrencia apply(FixedLine line) {
+    return new Ocorrencia() {
+      @Override
+      public OcorrenciaTipo getTipo() {
+        return OcorrenciaTipo.DESCONHECIDA;
+      }
 
-  final Map<CnabKey<?, ?>, Object> map;
+      @Override
+      public List<Motivo> getMotivos() {
+        return ImmutableList.of();
+      }
 
-  public RegistroPadrao(Banco banco, Spec spec, FixedLine line) {
-    this.banco = banco;
+      @Override
+      public String getDescricao() {
+        return "";
+      }
 
-    Map<CnabKey<?, ?>, Object> map = newLinkedHashMap();
-
-    for (CnabKey<?, ?> key : spec.keySet()) {
-      Object value = key.apply(banco, line);
-      map.put(key, value);
-    }
-
-    this.map = map;
+      @Override
+      public OcorrenciaCodigo getCodigo() {
+        return new OcorrenciaCodigo(0, null, null) {
+          @Override
+          OcorrenciaTipo getTipo() {
+            return OcorrenciaTipo.DESCONHECIDA;
+          }
+        };
+      }
+    };
   }
 
   @Override
-  public Banco getBanco() {
-    return banco;
-  }
-
-  @Override
-  public String toString() {
-    return map.toString();
+  Map<String, OcorrenciaCodigo> getCodigoMap() {
+    return null;
   }
 
 }
