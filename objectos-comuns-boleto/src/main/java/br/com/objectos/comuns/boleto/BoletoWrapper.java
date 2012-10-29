@@ -25,6 +25,8 @@ import br.com.caelum.stella.boleto.Datas;
 import br.com.caelum.stella.boleto.Emissor;
 import br.com.caelum.stella.boleto.Sacado;
 import br.com.caelum.stella.boleto.transformer.BoletoGenerator;
+import br.com.objectos.comuns.base.br.Cep;
+import br.com.objectos.comuns.base.br.Cpf;
 
 /**
  * @author ricardo.murad@objectos.com.br (Ricardo Murad)
@@ -102,8 +104,9 @@ public class BoletoWrapper {
     return this;
   }
 
-  public BoletoWrapper cpfSacado(String cpf) {
-    sacado.withCpf(cleanString(cpf));
+  public BoletoWrapper cpfSacado(Cpf cpf) {
+    String string = cleanString(cpf.toString());
+    sacado.withCpf(string);
     return this;
   }
   public BoletoWrapper enderecoSacado(String endereco) {
@@ -116,8 +119,8 @@ public class BoletoWrapper {
     return this;
   }
 
-  public BoletoWrapper cepSacado(String cep) {
-    sacado.withCep(cleanString(cep));
+  public BoletoWrapper cepSacado(Cep cep) {
+    sacado.withCep(cleanString(cep.toString()));
     return this;
   }
 

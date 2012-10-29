@@ -24,6 +24,9 @@ import java.math.BigDecimal;
 import org.joda.time.LocalDate;
 import org.testng.annotations.Test;
 
+import br.com.objectos.comuns.base.br.Cep;
+import br.com.objectos.comuns.base.br.Cpf;
+
 /**
  * @author ricardo.murad@objectos.com.br (Ricardo Murad)
  */
@@ -51,10 +54,10 @@ public class TesteDeEmissaoDeBoletoPdfWrapper {
     int numeroConvenio = 456;
 
     String nomeSacado = "Marina Santos";
-    String cpf = "305.673,628/-50";
+    Cpf cpf = Cpf.parseCPF("305.673,628/50");
     String endereco = "Avenida Paulista, 1000";
     String bairro = "Bela Vista";
-    String cep = "01310100";
+    Cep cep = Cep.valueOf("01310-100");
     String cidade = "São Paulo";
     String estado = "SP";
 
