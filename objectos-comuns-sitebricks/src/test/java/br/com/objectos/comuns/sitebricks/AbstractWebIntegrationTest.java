@@ -34,6 +34,7 @@ import com.google.sitebricks.client.Web;
 import com.google.sitebricks.client.Web.FormatBuilder;
 import com.google.sitebricks.client.WebClient;
 import com.google.sitebricks.client.WebResponse;
+import com.google.sitebricks.client.transport.Json;
 import com.google.sitebricks.client.transport.Text;
 
 /**
@@ -49,7 +50,8 @@ public abstract class AbstractWebIntegrationTest {
     server = new Jetty(STD_RESOURCE_DIR);
   }
 
-  private List<WebClient<String>> webClientCache;
+  private List<WebClient<Object>> jsonClientCache;
+  private List<WebClient<String>> textClientCache;
 
   @BeforeSuite
   public void start() throws Exception {
@@ -58,7 +60,8 @@ public abstract class AbstractWebIntegrationTest {
 
   @BeforeClass
   public void injectMembers() {
-    webClientCache = newArrayList();
+    jsonClientCache = newArrayList();
+    textClientCache = newArrayList();
     server.getInjector().injectMembers(this);
   }
 
@@ -69,7 +72,10 @@ public abstract class AbstractWebIntegrationTest {
 
   @AfterClass(alwaysRun = true)
   public void closeWebClients() {
-    for (WebClient<?> client : webClientCache) {
+    for (WebClient<?> client : jsonClientCache) {
+      client.close();
+    }
+    for (WebClient<?> client : textClientCache) {
       client.close();
     }
   }
@@ -98,6 +104,12 @@ public abstract class AbstractWebIntegrationTest {
     return cookies;
   }
 
+  protected WebClient<Object> jsonClientOf(String url, Map<String, String> headers) {
+    WebClient<Object> client = clientOf(url, headers).transports(Object.class).over(Json.class);
+    jsonClientCache.add(client);
+    return client;
+  }
+
   protected WebClient<String> webClientOf(String url) {
     Map<String, String> headers = ImmutableMap.of();
     return webClientOf(url, headers);
@@ -105,7 +117,7 @@ public abstract class AbstractWebIntegrationTest {
 
   protected WebClient<String> webClientOf(String url, Map<String, String> headers) {
     WebClient<String> client = clientOf(url, headers).transports(String.class).over(Text.class);
-    webClientCache.add(client);
+    textClientCache.add(client);
     return client;
   }
 
