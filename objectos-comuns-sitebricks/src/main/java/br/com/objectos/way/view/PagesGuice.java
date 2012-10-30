@@ -64,13 +64,14 @@ class PagesGuice extends Pages {
   @Override
   public Reply<?> post(Class<?> templateClass, Context context) {
     Response response = new Response(templateClass, context);
-    return Reply.with(response.json).as(Json.class).type(Mimes.APPLICATION_JSON_UTF8);
+    return Reply.with(response.context).as(Json.class).type(Mimes.APPLICATION_JSON_UTF8);
   }
 
   private class Response {
 
     final String html;
     final String json;
+    final Context context;
 
     public Response(Class<?> templateClass, Context context) {
       String html = render(templateClass, context);
@@ -80,6 +81,7 @@ class PagesGuice extends Pages {
 
       this.json = toJson(context);
       this.html = Tags.appendContext(html, json);
+      this.context = context;
     }
 
   }
