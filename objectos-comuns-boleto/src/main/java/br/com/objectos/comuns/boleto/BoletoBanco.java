@@ -25,7 +25,6 @@ import br.com.caelum.stella.boleto.bancos.Itau;
  * @author ricardo.murad@objectos.com.br (Ricardo Murad)
  */
 public enum BoletoBanco {
-
   BANCO_DO_BRASIL("001") {
     @Override
     Banco getbanco() {
@@ -54,12 +53,16 @@ public enum BoletoBanco {
   private String numero;
 
   BoletoBanco(String numero) {
+    this.numero = numero;
   }
 
-  public String getNumeroBanco() {
-    return numero;
+  public static BoletoBanco porNumero(String numero) {
+    for (BoletoBanco banco : BoletoBanco.values()) {
+      if (banco.numero == numero)
+        return banco;
+    }
+    return null;
   }
 
   abstract Banco getbanco();
-
 }

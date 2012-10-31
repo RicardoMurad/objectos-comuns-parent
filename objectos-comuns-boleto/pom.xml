@@ -7,7 +7,7 @@
         <relativePath>..</relativePath>
 	</parent>
   <artifactId>objectos-comuns-boleto</artifactId>
-  <name>objectos :: comuns :: web :: boleto</name>
+  <name>objectos :: comuns :: boleto</name>
   <scm>
       <connection>scm:git:git://objectos/objectos-comuns-boleto.git</connection>
       <developerConnection>scm:git:git@github.com:objectos/objectos-comuns-boleto.git</developerConnection>

@@ -19,7 +19,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 import java.io.File;
-import java.math.BigDecimal;
 
 import org.joda.time.LocalDate;
 import org.testng.annotations.Test;
@@ -35,7 +34,7 @@ public class TesteDeEmissaoDeBoletoPdfWrapper {
 
   public void gerar_boleto_em_formato_pdf() throws Exception {
     String contra = "src/test/resources/contra.pdf";
-    String resultado = "src/test/resources/saida.pdf";
+    String resultado = "/tmp/saida.pdf";
 
     LocalDate dataDocumento = new LocalDate(2012, 7, 22);
     LocalDate dataProcessamento = new LocalDate(2013, 8, 25);
@@ -68,10 +67,10 @@ public class TesteDeEmissaoDeBoletoPdfWrapper {
     String locaisPagamento = "Pagável em qualquer agência até a data de vencimento";
     String numeroDocumento = "124365";
     String especie = "EspecieDoc";
-    BigDecimal quantidadeMoeda = BigDecimal.valueOf(11);
-    BigDecimal valorMoeda = BigDecimal.valueOf(9);
+    double quantidadeMoeda = 12.0;
+    double valorMoeda = 1.0;
 
-    BoletoWrapper.newBoleto()
+    BoletoBancario.newBoleto()
         .dataDocumento(dataDocumento)
         .dataProcessamento(dataProcessamento)
         .dataVencimento(dataVecimento)

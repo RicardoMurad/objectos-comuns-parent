@@ -13,6 +13,7 @@
 	<modules>
 		<module>objectos-comuns-attachment</module>
 		<module>objectos-comuns-base</module>
+		<module>objectos-comuns-boleto</module>
 		<module>objectos-comuns-cnab</module>
 		<module>objectos-comuns-fileupload</module>
 		<module>objectos-comuns-io</module>
