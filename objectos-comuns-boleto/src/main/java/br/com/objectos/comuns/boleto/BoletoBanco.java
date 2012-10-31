@@ -25,38 +25,38 @@ import br.com.caelum.stella.boleto.bancos.Itau;
  * @author ricardo.murad@objectos.com.br (Ricardo Murad)
  */
 public enum BoletoBanco {
-  BANCO_DO_BRASIL("001") {
+  BANCO_DO_BRASIL(1) {
     @Override
     Banco getbanco() {
       return new BancoDoBrasil();
     }
   },
-  BRADESCO("237") {
+  BRADESCO(237) {
     @Override
     Banco getbanco() {
       return new Bradesco();
     }
   },
-  CAIXA("104") {
+  CAIXA(104) {
     @Override
     Banco getbanco() {
       return new Caixa();
     }
   },
-  ITAU("341") {
+  ITAU(34) {
     @Override
     Banco getbanco() {
       return new Itau();
     }
   };
 
-  private String numero;
+  private int numero;
 
-  BoletoBanco(String numero) {
+  BoletoBanco(int numero) {
     this.numero = numero;
   }
 
-  public static BoletoBanco porNumero(String numero) {
+  public static BoletoBanco porNumero(int numero) {
     for (BoletoBanco banco : BoletoBanco.values()) {
       if (banco.numero == numero)
         return banco;

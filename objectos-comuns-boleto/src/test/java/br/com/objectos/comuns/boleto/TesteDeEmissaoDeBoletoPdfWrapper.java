@@ -60,6 +60,7 @@ public class TesteDeEmissaoDeBoletoPdfWrapper {
     String cidade = "São Paulo";
     String estado = "SP";
 
+    int numerobanco = 1;
     String valorBoleto = "177.40";
     String descricao = "01 Produto XY";
     boolean aceite = false;
@@ -104,7 +105,7 @@ public class TesteDeEmissaoDeBoletoPdfWrapper {
         .especieDocumento(especie)
         .quantidadeMoeda(quantidadeMoeda)
         .valorMoeda(valorMoeda)
-        .paraBanco(BoletoBanco.BANCO_DO_BRASIL)
+        .paraBanco(BoletoBanco.porNumero(numerobanco))
         .toPdf(resultado);
 
     String c1 = PdfToText.fromFile(contra);

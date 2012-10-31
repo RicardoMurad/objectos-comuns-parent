@@ -27,7 +27,7 @@ import org.testng.annotations.Test;
 public class TesteDeEnumBoletoBanco {
 
   public void deve_retornar_banco_correto() {
-    String banco = "001";
+    int banco = 1;
     BoletoBanco res = BoletoBanco.porNumero(banco);
 
     assertThat(res, equalTo(BoletoBanco.BANCO_DO_BRASIL));
