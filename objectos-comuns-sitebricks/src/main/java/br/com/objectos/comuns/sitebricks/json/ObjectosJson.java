@@ -15,6 +15,8 @@
  */
 package br.com.objectos.comuns.sitebricks.json;
 
+import br.com.objectos.comuns.sitebricks.BaseUrl;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.sitebricks.client.transport.JacksonJsonTransport;
@@ -27,10 +29,10 @@ import com.google.sitebricks.conversion.ConverterRegistry;
 class ObjectosJson extends JacksonJsonTransport {
 
   @Inject
-  public ObjectosJson(ConverterRegistry registry) {
+  public ObjectosJson(ConverterRegistry registry, BaseUrl baseUrl) {
     super(registry);
 
-    new ObjectMapperDecorator().decorate(getObjectMapper());
+    new ObjectMapperDecorator(baseUrl).decorate(getObjectMapper());
   }
 
 }

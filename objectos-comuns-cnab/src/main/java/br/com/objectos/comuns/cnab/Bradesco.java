@@ -40,6 +40,8 @@ public final class Bradesco implements Modelo {
 
   public static final Bradesco banco = Singleton.INSTANCE.get();
 
+  public static final OcorrenciaParser ocorrenciaParser = new BradescoOcorrenciaParser();
+
   private final BradescoHeaderSpec headerSpec;
 
   private final BradescoLoteSpec loteSpec;

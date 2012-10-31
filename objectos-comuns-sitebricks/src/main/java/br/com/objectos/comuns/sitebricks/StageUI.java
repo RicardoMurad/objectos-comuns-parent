@@ -15,13 +15,37 @@
  */
 package br.com.objectos.comuns.sitebricks;
 
+import java.io.IOException;
+
+import org.codehaus.jackson.JsonGenerator;
+import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.map.JsonSerializer;
+import org.codehaus.jackson.map.SerializerProvider;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 /**
  * @author marcio.endo@objectos.com.br (Marcio Endo)
  */
+@JsonSerialize(using = StageUI.Serializer.class)
 public enum StageUI {
 
   DEVELOPMENT,
 
-  PRODUCTION
+  PRODUCTION;
+
+  public static class Serializer extends JsonSerializer<StageUI> {
+
+    @Override
+    public void serialize(StageUI value, JsonGenerator jgen, SerializerProvider provider)
+        throws IOException, JsonProcessingException {
+
+      jgen.writeStartObject();
+      jgen.writeBooleanField("development", DEVELOPMENT.equals(value));
+      jgen.writeBooleanField("production", PRODUCTION.equals(value));
+      jgen.writeEndObject();
+
+    }
+
+  }
 
 }

@@ -26,7 +26,7 @@ import br.com.objectos.comuns.cnab.CnabKey.Construtor;
  */
 abstract class AbstractSpec implements Spec {
 
-  private final Set<CnabKey<?, ?>> keySet = newLinkedHashSet();
+  final Set<CnabKey<?, ?>> keySet = newLinkedHashSet();
 
   @Override
   public final Set<CnabKey<?, ?>> keySet() {

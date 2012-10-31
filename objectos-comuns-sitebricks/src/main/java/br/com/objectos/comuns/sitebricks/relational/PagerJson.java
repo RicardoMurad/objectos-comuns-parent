@@ -15,10 +15,14 @@
  */
 package br.com.objectos.comuns.sitebricks.relational;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
+
 /**
  * @author marcio.endo@objectos.com.br (Marcio Endo)
  */
-class PageTotalJson implements PageTotal {
+@JsonAutoDetect(getterVisibility = Visibility.PUBLIC_ONLY, fieldVisibility = Visibility.NONE)
+class PagerJson implements Pager {
 
   private final int number;
 
@@ -26,7 +30,7 @@ class PageTotalJson implements PageTotal {
 
   private final int total;
 
-  public PageTotalJson(int number, int length, int total) {
+  public PagerJson(int number, int length, int total) {
     this.number = number;
     this.length = length;
     this.total = total;

@@ -19,7 +19,6 @@ import static com.google.common.collect.Maps.newLinkedHashMap;
 
 import java.util.Map;
 
-import br.com.objectos.comuns.io.ColumnConversionException;
 import br.com.objectos.comuns.io.FixedLine;
 
 /**
@@ -37,18 +36,7 @@ abstract class RegistroPadrao implements Registro {
     Map<CnabKey<?, ?>, Object> map = newLinkedHashMap();
 
     for (CnabKey<?, ?> key : spec.keySet()) {
-      Object value = null;
-
-      try {
-        if (key.optional) {
-          value = line.column(key.pos0, key.pos1).orNull(key.type);
-        } else {
-          value = line.column(key.pos0, key.pos1).get(key.type);
-        }
-      } catch (ColumnConversionException e) {
-        throw new ExcecaoCnabKey(line, key, e);
-      }
-
+      Object value = key.apply(banco, line);
       map.put(key, value);
     }
 

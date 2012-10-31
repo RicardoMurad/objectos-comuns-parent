@@ -32,6 +32,8 @@ public interface CnabLote extends BancoKey, LoteKey {
 
   CnabKey<CnabLote, String> nossoNumero2();
 
+  CnabKey<CnabLote, Ocorrencia> ocorrencia();
+
   CnabKey<CnabLote, Integer> codigoDeOcorrencia();
 
   CnabKey<CnabLote, LocalDate> dataDeOcorrencia();

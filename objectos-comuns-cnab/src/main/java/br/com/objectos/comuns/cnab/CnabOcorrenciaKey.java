@@ -13,21 +13,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package br.com.objectos.comuns.sitebricks.relational;
+package br.com.objectos.comuns.cnab;
+
+import br.com.objectos.comuns.io.FixedLine;
 
 /**
  * @author marcio.endo@objectos.com.br (Marcio Endo)
  */
-public interface PageTotal {
+class CnabOcorrenciaKey<K extends BancoKey> extends CnabKey<K, Ocorrencia> {
 
-  boolean isHasPrevious();
-  boolean isHasNext();
+  CnabOcorrenciaKey(Class<K> keyClass, String id) {
+    super(keyClass, id, Ocorrencia.class, 108, 110, false);
+  }
 
-  int getPrevious();
-  int getNumber();
-  int getNext();
-
-  int getPageCount();
-  int getTotal();
+  @Override
+  Object apply(Banco banco, FixedLine line) {
+    return banco.parseOcorrencia(line);
+  }
 
 }

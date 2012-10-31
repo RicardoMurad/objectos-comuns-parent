@@ -10,6 +10,7 @@
 		<connection>scm:git:git://objectos/objectos-comuns-parent.git</connection>
 		<developerConnection>scm:git:git@github.com:objectos/objectos-comuns-parent.git</developerConnection>
 	</scm>
+<<<<<<< HEAD
     <modules>
         <module>objectos-comuns-attachment</module>
         <module>objectos-comuns-base</module>
@@ -19,6 +20,17 @@
         <module>objectos-comuns-jdbc</module>
         <module>objectos-comuns-sitebricks</module>
     </modules>
+=======
+	<modules>
+		<module>objectos-comuns-attachment</module>
+		<module>objectos-comuns-base</module>
+		<module>objectos-comuns-cnab</module>
+		<module>objectos-comuns-fileupload</module>
+		<module>objectos-comuns-io</module>
+		<module>objectos-comuns-jdbc</module>
+		<module>objectos-comuns-sitebricks</module>
+	</modules>
+>>>>>>> origin/moe_23_objectos_comuns_3_0
 	<properties>
 		<caelum.stella.version>2.0-beta1</caelum.stella.version>
 		<caucho.resin.version>3.2.1</caucho.resin.version>
@@ -45,6 +57,7 @@
 		<maven.sql.version>1.5</maven.sql.version>
 		<maven.surefire.version>2.8.1</maven.surefire.version>
 		<maven.war.version>2.1.1</maven.war.version>
+		<mustache.java.version>0.8.7</mustache.java.version>
 		<mysql.connector.version>5.1.21</mysql.connector.version>
 		<net.sf.ehcache.version>2.2.0</net.sf.ehcache.version>
 		<objectos.comuns.version>3.0-SNAPSHOT</objectos.comuns.version>
@@ -56,7 +69,7 @@
 		<objectos.comuns.dbunit.version>2.0.7</objectos.comuns.dbunit.version>
 		<objectos.comuns.etc.version>2.0.1</objectos.comuns.etc.version>
 		<objectos.comuns.fileupload.version>${objectos.comuns.version}</objectos.comuns.fileupload.version>
-		<objectos.comuns.io.version>2.0.6</objectos.comuns.io.version>
+		<objectos.comuns.io.version>${objectos.comuns.version}</objectos.comuns.io.version>
 		<objectos.comuns.jdbc.version>${objectos.comuns.version}</objectos.comuns.jdbc.version>
 		<objectos.comuns.jgravatar.version>1.0.0</objectos.comuns.jgravatar.version>
 		<objectos.comuns.relational.version>2.0.5</objectos.comuns.relational.version>

@@ -17,6 +17,8 @@ package br.com.objectos.comuns.sitebricks.json;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import br.com.objectos.comuns.sitebricks.BaseUrl;
+
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.sitebricks.client.transport.JacksonJsonTransport;
@@ -26,17 +28,20 @@ import com.google.sitebricks.client.transport.JacksonJsonTransport;
  */
 class ObjectMapperProvider implements Provider<ObjectMapper> {
 
+  private final BaseUrl baseUrl;
+
   private final JacksonJsonTransport transport;
 
   @Inject
-  public ObjectMapperProvider(JacksonJsonTransport transport) {
+  public ObjectMapperProvider(BaseUrl baseUrl, JacksonJsonTransport transport) {
+    this.baseUrl = baseUrl;
     this.transport = transport;
   }
 
   @Override
   public ObjectMapper get() {
     ObjectMapper mapper = transport.getObjectMapper();
-    return new ObjectMapperDecorator().decorate(mapper);
+    return new ObjectMapperDecorator(baseUrl).decorate(mapper);
   }
 
 }

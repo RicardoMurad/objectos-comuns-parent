@@ -36,6 +36,8 @@ class CnabLoteSpec extends AbstractSpec implements CnabLote {
   private final CnabKey<CnabLote, Integer> CARTEIRA_NUMERO = cnabKey()
       .id("Carteira (No.)").at(107, 108).get(Integer.class);
 
+  private final CnabKey<CnabLote, Ocorrencia> OCORRENCIA = ocorrenciaKey();
+
   private final CnabKey<CnabLote, Integer> CODIGO_OCORRENCIA = cnabKey()
       .id("Código de Ocorrência").at(108, 110).get(Integer.class);
 
@@ -92,6 +94,12 @@ class CnabLoteSpec extends AbstractSpec implements CnabLote {
     return new CnabKeyDecorator<CnabLote>(construtor);
   }
 
+  private CnabKey<CnabLote, Ocorrencia> ocorrenciaKey() {
+    CnabOcorrenciaKey<CnabLote> key = new CnabOcorrenciaKey<CnabLote>(CnabLote.class, "Ocorrência");
+    keySet.add(key);
+    return key;
+  }
+
   @Override
   public CnabKey<CnabLote, Integer> tipoDeInscricaoDaEmpresa() {
     return TIPO_INSCRICAO_EMPRESA;
@@ -115,6 +123,11 @@ class CnabLoteSpec extends AbstractSpec implements CnabLote {
   @Override
   public CnabKey<CnabLote, String> nossoNumero2() {
     return NOSSO_NUMERO_2;
+  }
+
+  @Override
+  public CnabKey<CnabLote, Ocorrencia> ocorrencia() {
+    return OCORRENCIA;
   }
 
   @Override
