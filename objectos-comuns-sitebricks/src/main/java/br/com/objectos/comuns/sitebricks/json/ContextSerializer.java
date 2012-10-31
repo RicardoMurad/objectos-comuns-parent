@@ -15,7 +15,7 @@
  */
 package br.com.objectos.comuns.sitebricks.json;
 
-import static com.google.common.collect.Maps.newHashMap;
+import static com.google.common.collect.Maps.newLinkedHashMap;
 
 import java.io.IOException;
 import java.util.Map;
@@ -46,7 +46,7 @@ class ContextSerializer extends JsonSerializer<Context> {
   public void serialize(Context value, JsonGenerator jgen, SerializerProvider provider)
       throws IOException, JsonProcessingException {
 
-    Map<Object, Object> toSerialize = newHashMap();
+    Map<Object, Object> toSerialize = newLinkedHashMap();
 
     Object root = value.root;
     if (root != null) {
