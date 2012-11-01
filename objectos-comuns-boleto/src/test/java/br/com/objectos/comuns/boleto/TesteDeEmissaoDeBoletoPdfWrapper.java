@@ -34,7 +34,8 @@ public class TesteDeEmissaoDeBoletoPdfWrapper {
 
   public void gerar_boleto_em_formato_pdf() throws Exception {
     String contra = "src/test/resources/contra.pdf";
-    String resultado = "/tmp/saida.pdf";
+    String tmpDir = System.getProperty("java.io.tmpdir");
+    String resultado = tmpDir + File.separator + "saida.pdf";
 
     LocalDate dataDocumento = new LocalDate(2012, 7, 22);
     LocalDate dataProcessamento = new LocalDate(2013, 8, 25);
@@ -105,15 +106,13 @@ public class TesteDeEmissaoDeBoletoPdfWrapper {
         .especieDocumento(especie)
         .quantidadeMoeda(quantidadeMoeda)
         .valorMoeda(valorMoeda)
-        .paraBanco(BoletoBanco.porNumero(numerobanco))
+        .paraBanco(BoletoBanco.valueOf(numerobanco))
         .toPdf(resultado);
 
     String c1 = PdfToText.fromFile(contra);
     String c2 = PdfToText.fromFile(resultado);
 
     assertThat(c1, equalTo(c2));
-
-    File file = new File(resultado);
-    file.delete();
   }
+
 }

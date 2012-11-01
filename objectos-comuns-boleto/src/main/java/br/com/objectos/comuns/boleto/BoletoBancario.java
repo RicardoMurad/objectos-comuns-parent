@@ -27,6 +27,7 @@ import br.com.caelum.stella.boleto.Sacado;
 import br.com.caelum.stella.boleto.transformer.BoletoGenerator;
 import br.com.objectos.comuns.base.br.Cep;
 import br.com.objectos.comuns.base.br.Cpf;
+import br.com.objectos.comuns.matematica.financeira.ValorFinanceiro;
 
 /**
  * @author ricardo.murad@objectos.com.br (Ricardo Murad)
@@ -105,11 +106,12 @@ public class BoletoBancario {
   }
 
   public BoletoBancario cpfSacado(Cpf cpf) {
-    String string = cpf.toString()
-        .replaceAll("[.//\\,]", "");
-    sacado.withCpf(string);
+    String val = cpf.toString()
+        .replaceAll("[.-]", "");
+    sacado.withCpf(val);
     return this;
   }
+
   public BoletoBancario enderecoSacado(String endereco) {
     sacado.withEndereco(endereco);
     return this;
@@ -197,8 +199,20 @@ public class BoletoBancario {
     return this;
   }
 
+  public BoletoBancario quantidadeMoeda(ValorFinanceiro quantidade) {
+    BigDecimal val = quantidade.bigDecimalValue();
+    boleto.withQuantidadeMoeda(val);
+    return this;
+  }
+
   public BoletoBancario valorMoeda(double valor) {
     BigDecimal val = BigDecimal.valueOf(valor);
+    boleto.withValorMoeda(val);
+    return this;
+  }
+
+  public BoletoBancario valorMoeda(ValorFinanceiro valor) {
+    BigDecimal val = valor.bigDecimalValue();
     boleto.withValorMoeda(val);
     return this;
   }
