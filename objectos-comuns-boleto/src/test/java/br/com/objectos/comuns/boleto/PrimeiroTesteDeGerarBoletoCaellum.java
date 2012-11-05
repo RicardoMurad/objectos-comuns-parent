@@ -19,7 +19,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 import java.io.File;
-import java.math.BigDecimal;
 
 import org.testng.annotations.Test;
 
@@ -39,7 +38,7 @@ public class PrimeiroTesteDeGerarBoletoCaellum {
   @Test
   public void teste_construcao_de_boleto_com_stella() throws Exception {
     String contra = "src/test/resources/contra.pdf";
-    File tempFile = File.createTempFile("saida", "pdf");
+    File tempFile = File.createTempFile("saida", ".pdf");
     String resultado = tempFile.getAbsolutePath();
 
     int diaDocumento = 22;
@@ -81,8 +80,6 @@ public class PrimeiroTesteDeGerarBoletoCaellum {
     String locaisPagamento = "Pagável em qualquer agência até a data de vencimento";
     String numeroDeDocumento = "124365";
     String especie = "EspecieDoc";
-    BigDecimal quantidadeDeMoeda = BigDecimal.valueOf(11);
-    BigDecimal valorDeMoeda = BigDecimal.valueOf(9);
 
     BancoDoBrasil banco = new BancoDoBrasil();
 
@@ -124,9 +121,7 @@ public class PrimeiroTesteDeGerarBoletoCaellum {
         .withInstrucoes(instruções)
         .withLocaisDePagamento(locaisPagamento)
         .withNumeroDoDocumento(numeroDeDocumento)
-        .withEspecieDocumento(especie)
-        .withQuantidadeMoeda(quantidadeDeMoeda)
-        .withValorMoeda(valorDeMoeda);
+        .withEspecieDocumento(especie);
 
     BoletoGenerator generator = new BoletoGenerator(boleto);
     generator.toPDF(resultado);
@@ -136,5 +131,4 @@ public class PrimeiroTesteDeGerarBoletoCaellum {
 
     assertThat(c1, equalTo(c2));
   }
-
 }

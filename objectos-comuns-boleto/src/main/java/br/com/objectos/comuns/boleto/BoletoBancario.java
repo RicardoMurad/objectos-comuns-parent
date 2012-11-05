@@ -15,7 +15,6 @@
  */
 package br.com.objectos.comuns.boleto;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
 
 import org.joda.time.LocalDate;
@@ -158,8 +157,14 @@ public class BoletoBancario {
     return calendar;
   }
 
-  public BoletoBancario valorDoBoleto(String valor) {
+  public BoletoBancario valorDoBoleto(double valor) {
     boleto.withValorBoleto(valor);
+    return this;
+  }
+
+  public BoletoBancario valorDoBoleto(ValorFinanceiro valor) {
+    double val = valor.doubleValue();
+    boleto.withValorBoleto(val);
     return this;
   }
 
@@ -190,30 +195,6 @@ public class BoletoBancario {
 
   public BoletoBancario especieDocumento(String especie) {
     boleto.withEspecieDocumento(especie);
-    return this;
-  }
-
-  public BoletoBancario quantidadeMoeda(double quantidade) {
-    BigDecimal val = BigDecimal.valueOf(quantidade);
-    boleto.withQuantidadeMoeda(val);
-    return this;
-  }
-
-  public BoletoBancario quantidadeMoeda(ValorFinanceiro quantidade) {
-    BigDecimal val = quantidade.bigDecimalValue();
-    boleto.withQuantidadeMoeda(val);
-    return this;
-  }
-
-  public BoletoBancario valorMoeda(double valor) {
-    BigDecimal val = BigDecimal.valueOf(valor);
-    boleto.withValorMoeda(val);
-    return this;
-  }
-
-  public BoletoBancario valorMoeda(ValorFinanceiro valor) {
-    BigDecimal val = valor.bigDecimalValue();
-    boleto.withValorMoeda(val);
     return this;
   }
 

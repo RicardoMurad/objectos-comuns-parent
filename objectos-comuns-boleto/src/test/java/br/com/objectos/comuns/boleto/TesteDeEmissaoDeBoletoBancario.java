@@ -34,7 +34,7 @@ public class TesteDeEmissaoDeBoletoBancario {
 
   public void gerar_boleto_em_formato_pdf() throws Exception {
     String contra = "src/test/resources/contra.pdf";
-    File saida = File.createTempFile("saida", "pdf");
+    File saida = File.createTempFile("saida", ".pdf");
     String resultado = saida.getAbsolutePath();
 
     LocalDate dataDocumento = new LocalDate(2012, 7, 22);
@@ -61,15 +61,13 @@ public class TesteDeEmissaoDeBoletoBancario {
     String cidade = "São Paulo";
     String estado = "SP";
 
-    String valorDoBoleto = "177.40";
+    double valorDoBoleto = 177.4;
     String descricao = "01 Produto XY";
     boolean aceite = false;
     String instruções = "Não receber após a data de vencimento.";
     String locaisPagamento = "Pagável em qualquer agência até a data de vencimento";
     String numeroDocumento = "124365";
     String especie = "EspecieDoc";
-    double quantidadeDeMoedaBoleto = 12.0;
-    double valorDeMoedaBoleto = 1.0;
     int numeroDobanco = 1;
 
     BoletoBancario.newBoleto()
@@ -104,8 +102,6 @@ public class TesteDeEmissaoDeBoletoBancario {
         .locaisDepagamento(locaisPagamento)
         .numeroDocumento(numeroDocumento)
         .especieDocumento(especie)
-        .quantidadeMoeda(quantidadeDeMoedaBoleto)
-        .valorMoeda(valorDeMoedaBoleto)
         .paraBanco(BoletoBanco.valueOf(numeroDobanco))
         .toPdf(resultado);
 
