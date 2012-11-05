@@ -39,7 +39,8 @@ public class PrimeiroTesteDeGerarBoletoCaellum {
   @Test
   public void teste_construcao_de_boleto_com_stella() throws Exception {
     String contra = "src/test/resources/contra.pdf";
-    String resultado = "src/test/resources/saida.pdf";
+    File tempFile = File.createTempFile("saida", "pdf");
+    String resultado = tempFile.getAbsolutePath();
 
     int diaDocumento = 22;
     int mesDocumento = 7;
@@ -78,10 +79,10 @@ public class PrimeiroTesteDeGerarBoletoCaellum {
     boolean aceite = false;
     String instruções = "Não receber após a data de vencimento.";
     String locaisPagamento = "Pagável em qualquer agência até a data de vencimento";
-    String numeroDocumento = "124365";
+    String numeroDeDocumento = "124365";
     String especie = "EspecieDoc";
-    BigDecimal quantidadeMoeda = BigDecimal.valueOf(11);
-    BigDecimal valorMoeda = BigDecimal.valueOf(9);
+    BigDecimal quantidadeDeMoeda = BigDecimal.valueOf(11);
+    BigDecimal valorDeMoeda = BigDecimal.valueOf(9);
 
     BancoDoBrasil banco = new BancoDoBrasil();
 
@@ -122,10 +123,10 @@ public class PrimeiroTesteDeGerarBoletoCaellum {
         .withAceite(aceite)
         .withInstrucoes(instruções)
         .withLocaisDePagamento(locaisPagamento)
-        .withNumeroDoDocumento(numeroDocumento)
+        .withNumeroDoDocumento(numeroDeDocumento)
         .withEspecieDocumento(especie)
-        .withQuantidadeMoeda(quantidadeMoeda)
-        .withValorMoeda(valorMoeda);
+        .withQuantidadeMoeda(quantidadeDeMoeda)
+        .withValorMoeda(valorDeMoeda);
 
     BoletoGenerator generator = new BoletoGenerator(boleto);
     generator.toPDF(resultado);
@@ -134,9 +135,6 @@ public class PrimeiroTesteDeGerarBoletoCaellum {
     String c2 = PdfToText.fromFile(resultado);
 
     assertThat(c1, equalTo(c2));
-
-    File file = new File(resultado);
-    file.delete();
   }
 
 }

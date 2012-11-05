@@ -106,9 +106,8 @@ public class BoletoBancario {
   }
 
   public BoletoBancario cpfSacado(Cpf cpf) {
-    String val = cpf.toString()
-        .replaceAll("[.-]", "");
-    sacado.withCpf(val);
+    long longValue = cpf.longValue();
+    sacado.withCpf(Long.toString(longValue));
     return this;
   }
 
@@ -123,8 +122,9 @@ public class BoletoBancario {
   }
 
   public BoletoBancario cepSacado(Cep cep) {
-    String val = cep.toString();
-    sacado.withCep(val.replace("-", ""));
+    int prefixo = cep.getPrefixo();
+    int sufixo = cep.getSufixo();
+    sacado.withCep(String.format("%05d%03d", prefixo, sufixo));
     return this;
   }
   public BoletoBancario cidadeSacado(String cidade) {

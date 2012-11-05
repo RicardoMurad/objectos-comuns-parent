@@ -15,7 +15,8 @@
  */
 package br.com.objectos.comuns.boleto;
 
-import java.util.HashMap;
+import static com.google.common.collect.Maps.newHashMap;
+
 import java.util.Map;
 
 import br.com.caelum.stella.boleto.Banco;
@@ -53,7 +54,7 @@ public enum BoletoBanco {
     }
   };
 
-  private static final Map<Integer, BoletoBanco> codigoMap = new HashMap<Integer, BoletoBanco>();
+  private static final Map<Integer, BoletoBanco> codigoMap = newHashMap();
 
   static {
     for (BoletoBanco boletoBanco : BoletoBanco.values()) {
@@ -69,10 +70,13 @@ public enum BoletoBanco {
   }
 
   public static BoletoBanco valueOf(int codigo) {
-    if (!codigoMap.containsKey(codigo))
-      throw new IllegalArgumentException("Código de banco inválido");
+    BoletoBanco boletoBanco = BoletoBanco.BANCO_DO_BRASIL;
 
-    return codigoMap.get(codigo);
+    if (codigoMap.containsKey(codigo)) {
+      boletoBanco = codigoMap.get(codigo);
+    }
+
+    return boletoBanco;
   }
 
   public int getCodigo() {
@@ -80,4 +84,5 @@ public enum BoletoBanco {
   }
 
   abstract Banco getbanco();
+
 }

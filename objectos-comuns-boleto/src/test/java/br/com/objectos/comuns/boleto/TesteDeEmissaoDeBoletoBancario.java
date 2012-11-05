@@ -30,12 +30,12 @@ import br.com.objectos.comuns.base.br.Cpf;
  * @author ricardo.murad@objectos.com.br (Ricardo Murad)
  */
 @Test
-public class TesteDeEmissaoDeBoletoPdfWrapper {
+public class TesteDeEmissaoDeBoletoBancario {
 
   public void gerar_boleto_em_formato_pdf() throws Exception {
     String contra = "src/test/resources/contra.pdf";
-    String tmpDir = System.getProperty("java.io.tmpdir");
-    String resultado = tmpDir + File.separator + "saida.pdf";
+    File saida = File.createTempFile("saida", "pdf");
+    String resultado = saida.getAbsolutePath();
 
     LocalDate dataDocumento = new LocalDate(2012, 7, 22);
     LocalDate dataProcessamento = new LocalDate(2013, 8, 25);
@@ -61,16 +61,16 @@ public class TesteDeEmissaoDeBoletoPdfWrapper {
     String cidade = "São Paulo";
     String estado = "SP";
 
-    int numerobanco = 1;
-    String valorBoleto = "177.40";
+    String valorDoBoleto = "177.40";
     String descricao = "01 Produto XY";
     boolean aceite = false;
     String instruções = "Não receber após a data de vencimento.";
     String locaisPagamento = "Pagável em qualquer agência até a data de vencimento";
     String numeroDocumento = "124365";
     String especie = "EspecieDoc";
-    double quantidadeMoeda = 12.0;
-    double valorMoeda = 1.0;
+    double quantidadeDeMoedaBoleto = 12.0;
+    double valorDeMoedaBoleto = 1.0;
+    int numeroDobanco = 1;
 
     BoletoBancario.newBoleto()
         .dataDocumento(dataDocumento)
@@ -97,16 +97,16 @@ public class TesteDeEmissaoDeBoletoPdfWrapper {
         .cidadeSacado(cidade)
         .estadoSacado(estado)
 
-        .valorDoBoleto(valorBoleto)
+        .valorDoBoleto(valorDoBoleto)
         .descricao(descricao)
         .aceite(aceite)
         .instrucoes(instruções)
         .locaisDepagamento(locaisPagamento)
         .numeroDocumento(numeroDocumento)
         .especieDocumento(especie)
-        .quantidadeMoeda(quantidadeMoeda)
-        .valorMoeda(valorMoeda)
-        .paraBanco(BoletoBanco.valueOf(numerobanco))
+        .quantidadeMoeda(quantidadeDeMoedaBoleto)
+        .valorMoeda(valorDeMoedaBoleto)
+        .paraBanco(BoletoBanco.valueOf(numeroDobanco))
         .toPdf(resultado);
 
     String c1 = PdfToText.fromFile(contra);
